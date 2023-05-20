@@ -2,7 +2,6 @@ import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
 import { User } from './models/user.model';
 import { Follow } from './models/follow.model';
 import { followUser } from './dto/followUser.dto';
-import { Request } from 'express';
 
 @Injectable()
 export class UserService {
@@ -18,21 +17,21 @@ export class UserService {
     });
   }
 
-  async findOne(id: number) {
-    try {
-      const user = await this.user.findByPk(id);
-      delete user.hash;
-      if (user.deletedAt) {
-        throw new ForbiddenException('user is deleted');
-      }
-      return {
-        email: user.email,
-        name: user.name,
-      };
-    } catch (e) {
-      throw new ForbiddenException('user not found');
-    }
-  }
+  // async findOne(id: number) {
+  //   try {
+  //     const user = await this.user.findByPk(id);
+  //     delete user.hash;
+  //     if (user.deletedAt) {
+  //       throw new ForbiddenException('user is deleted');
+  //     }
+  //     return {
+  //       email: user.email,
+  //       name: user.name,
+  //     };
+  //   } catch (e) {
+  //     throw new ForbiddenException('user not found');
+  //   }
+  // }
   async delete(id: number) {
     try {
       const user = await this.user.findByPk(+id);
@@ -53,9 +52,5 @@ export class UserService {
       throw new ForbiddenException('wrong user data');
     }
     return '';
-  }
-
-  getme(req: Request) {
-    return req.user;
   }
 }

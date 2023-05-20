@@ -34,7 +34,7 @@ export class BookService {
           public: createBookDto.public || true,
           body: createBookDto.body,
           category: createBookDto.category || 'global',
-          user_id: createBookDto.id,
+          userId: createBookDto.id,
         });
         user.books.push(book);
         user.save();
@@ -104,8 +104,8 @@ export class BookService {
       const user = await this.user.findByPk(likeBook.id);
       if (await argon.verify(user.hash, likeBook.password)) {
         await this.like.create({
-          user_id: likeBook.id,
-          book_id: likeBook.book_id,
+          userId: likeBook.id,
+          bookId: likeBook.book_id,
         });
         return 'like book success';
       } else {
@@ -158,8 +158,8 @@ export class BookService {
       if (await argon.verify(user.hash, likeBook.password)) {
         await this.like.destroy({
           where: {
-            book_id: likeBook.book_id,
-            user_id: likeBook.id,
+            bookId: likeBook.book_id,
+            userId: likeBook.id,
           },
         });
         return 'success unlike';

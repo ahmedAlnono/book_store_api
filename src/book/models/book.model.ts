@@ -50,12 +50,18 @@ export class Book extends Model<Book> {
   @Column({ field: 'deleted_at' })
   deletedAt: Date;
 
+  @Column({ field: 'deleted_by' })
+  deletedBy: string;
+
+  @Column({ field: 'updated_by' })
+  updatedBy: string;
+
   @ForeignKey(() => User)
   @Column({
     type: DataType.INTEGER,
     field: 'user_id',
   })
-  user_id: number;
+  userId: number;
 
   @HasMany(() => Like)
   likes: Like[];

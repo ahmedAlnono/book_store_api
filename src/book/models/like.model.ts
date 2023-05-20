@@ -18,7 +18,7 @@ export class Like extends Model<Like> {
     type: DataType.INTEGER,
     field: 'user_id',
   })
-  user_id: number;
+  userId: number;
 
   @ForeignKey(() => User)
   @Column({
@@ -26,7 +26,7 @@ export class Like extends Model<Like> {
     field: 'user_like_id',
     allowNull: true,
   })
-  user_like_id: number;
+  userLikeId: number;
 
   @ForeignKey(() => Book)
   @Column({
@@ -34,7 +34,7 @@ export class Like extends Model<Like> {
     field: 'book_id',
     allowNull: true,
   })
-  book_id: number;
+  bookId: number;
 
   @DeletedAt
   @Column({ field: 'deletedAt' })
