@@ -5,10 +5,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategy';
 import { UserModule } from 'src/user/user.module';
 import { PassportModule } from '@nestjs/passport';
-// import { APP_GUARD } from '@nestjs/core';
 import { GoogleStrategy } from './strategy/google.strategy';
 import { userProviders } from '../user.providers';
-// import { AuthGuard } from './gaurd/auth.guard';
 
 @Module({
   imports: [
