@@ -12,6 +12,8 @@ import { User } from './user.model';
   deletedAt: true,
   updatedAt: true,
   createdAt: true,
+  paranoid: true,
+  underscored: true,
 })
 export class Follow extends Model {
   @ForeignKey(() => User)

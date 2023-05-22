@@ -25,7 +25,7 @@ export class UserController {
 
   @UseGuards(GlobalAuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string, @Req() req: Request) {
+  findOne(@Req() req: Request) {
     return req?.user;
   }
 

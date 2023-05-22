@@ -11,6 +11,8 @@ import { Book } from './book.model';
 
 @Table({
   deletedAt: true,
+  paranoid: true,
+  underscored: true,
 })
 export class Like extends Model<Like> {
   @ForeignKey(() => User)

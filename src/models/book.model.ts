@@ -14,6 +14,8 @@ const { INTEGER, JSON } = DataType;
 
 @Table({
   deletedAt: true,
+  paranoid: true,
+  underscored: true,
 })
 export class Book extends Model<Book> {
   @Column
