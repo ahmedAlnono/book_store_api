@@ -7,6 +7,7 @@ import {
   Delete,
   UseGuards,
   Req,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { followUser } from './dto/followUser.dto';
@@ -38,5 +39,19 @@ export class UserController {
   @Post('follow')
   followUser(@Body() User: followUser) {
     return this.userService.followUser(User);
+  }
+
+  @Delete(':id')
+  @UseGuards(GlobalAuthGuard)
+  deleteUserByAdmin(
+    @Req() req: Request,
+    @Param('id', new ParseIntPipe()) id: number,
+  ) {
+    const user = req['user'];
+    if (user['sub'] == id) {
+      return this.userService.delete(+id);
+    } else {
+      return this.userService.adminDelete(+id);
+    }
   }
 }

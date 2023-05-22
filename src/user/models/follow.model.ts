@@ -19,14 +19,14 @@ export class Follow extends Model {
     type: DataType.INTEGER,
     field: 'follower_id',
   })
-  follower_id: number;
+  followerId: number;
 
   @ForeignKey(() => User)
   @Column({
     type: DataType.INTEGER,
     field: 'followed_id',
   })
-  followed_id: number;
+  followedId: number;
 
   @DeletedAt
   @Column({ field: 'deletedAt' })

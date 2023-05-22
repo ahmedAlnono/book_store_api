@@ -1,4 +1,9 @@
-import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { User } from './models/user.model';
 import { Follow } from './models/follow.model';
 import { followUser } from './dto/followUser.dto';
@@ -45,12 +50,28 @@ export class UserService {
   async followUser(User: followUser) {
     try {
       await this.follow.create({
-        follower_id: User.id,
-        followed_id: User.followed_id,
+        followerId: User.id,
+        followedId: User.followed_id,
       });
     } catch (e) {
       throw new ForbiddenException('wrong user data');
     }
     return '';
+  }
+
+  async adminDelete(id: number) {
+    try {
+      const user = await this.user.findByPk(+id);
+      if (user) {
+        user.$set('deletedAt', Date.now());
+        user.$set('deletedBy', 'Admin');
+        await user.save();
+        return 'user is updated';
+      } else {
+        throw new ForbiddenException('user not found');
+      }
+    } catch (e) {
+      throw new BadRequestException('wrong user data');
+    }
   }
 }

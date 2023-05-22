@@ -48,6 +48,9 @@ export class User extends Model {
   @Column({ field: 'deleted_at' })
   deletedAt: Date;
 
+  @Column({ field: 'deleted_by', type: DataType.STRING, allowNull: true })
+  deletedBy: string;
+
   @HasMany(() => Follow)
   followers: Follow[];
 
