@@ -1,16 +1,18 @@
 import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
-import { User } from 'src/user/models/user.model';
+import { User } from 'src/models/user.model';
 import * as argon from 'argon2';
 import { FindeUserDto } from 'src/user/dto/find-user.dto';
-
+import { USER_MODEL } from 'src/common/constants/system.constants';
+import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class AuthService {
   constructor(
-    @Inject('User')
+    @Inject(USER_MODEL)
     private user: typeof User,
     private jwt: JwtService,
+    private configService: ConfigService,
   ) {}
   async signin(user: FindeUserDto) {
     const findeUser = await this.user.findByPk(user.id);
@@ -50,7 +52,7 @@ export class AuthService {
     };
     const token = await this.jwt.signAsync(payload, {
       expiresIn: '24h',
-      secret: 'supper-secret',
+      secret: this.configService.get('AUTH_SECRET'),
     });
     return {
       access_token: token,

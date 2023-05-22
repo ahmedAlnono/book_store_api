@@ -6,21 +6,26 @@ import {
 } from '@nestjs/common';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
-import { Book } from './models/book.model';
-import { Like } from './models/like.model';
-import { User } from 'src/user/models/user.model';
+import { Book } from '../models/book.model';
+import { Like } from '../models/like.model';
+import { User } from 'src/models/user.model';
 import * as argon from 'argon2';
 import { LikeBookDto } from './dto/like-book.dto';
 import { SaveBookDto } from './dto/save-book-dto';
+import {
+  BOOK_MODEL,
+  LIKE_MODEL,
+  USER_MODEL,
+} from 'src/common/constants/system.constants';
 
 @Injectable()
 export class BookService {
   constructor(
-    @Inject('Book')
+    @Inject(BOOK_MODEL)
     private book: typeof Book,
-    @Inject('Like')
+    @Inject(LIKE_MODEL)
     private like: typeof Like,
-    @Inject('User')
+    @Inject(USER_MODEL)
     private user: typeof User,
   ) {}
   async create(createBookDto: CreateBookDto) {
@@ -121,7 +126,7 @@ export class BookService {
       const user = await this.user.findByPk(saveBook.id);
       const book = await this.book.findByPk(saveBook.book_id);
       if ((await argon.verify(user.hash, saveBook.password)) && book) {
-        user.saved_book.push(book);
+        user.savedBook.push(book);
         await user.save();
         return 'booke saved';
       } else {

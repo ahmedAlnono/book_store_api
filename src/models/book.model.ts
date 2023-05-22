@@ -7,8 +7,10 @@ import {
   DeletedAt,
   HasMany,
 } from 'sequelize-typescript';
-import { User } from 'src/user/models/user.model';
+import { User } from './user.model';
 import { Like } from './like.model';
+
+const { INTEGER, JSON } = DataType;
 
 @Table({
   deletedAt: true,
@@ -18,7 +20,7 @@ export class Book extends Model<Book> {
   name: string;
 
   @Column({
-    type: DataType.JSON,
+    type: JSON,
   })
   data: {
     sections: number;
@@ -57,10 +59,7 @@ export class Book extends Model<Book> {
   updatedBy: string;
 
   @ForeignKey(() => User)
-  @Column({
-    type: DataType.INTEGER,
-    field: 'user_id',
-  })
+  @Column(INTEGER)
   userId: number;
 
   @HasMany(() => Like)

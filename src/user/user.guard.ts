@@ -5,13 +5,14 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { User } from './models/user.model';
+import { User } from '../models/user.model';
 import * as argon from 'argon2';
+import { USER_MODEL } from 'src/common/constants/system.constants';
 
 @Injectable()
 export class UserGuard implements CanActivate {
   constructor(
-    @Inject('User')
+    @Inject(USER_MODEL)
     private user: typeof User,
     private reflector: Reflector,
   ) {}

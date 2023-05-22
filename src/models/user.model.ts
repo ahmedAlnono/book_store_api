@@ -8,14 +8,13 @@ import {
   Unique,
   DeletedAt,
 } from 'sequelize-typescript';
-import { Book } from 'src/book/models/book.model';
+import { Book } from './book.model';
 import { Follow } from './follow.model';
-import { Like } from 'src/book/models/like.model';
+import { Like } from './like.model';
 
 @Table({
-  deletedAt: true,
-  updatedAt: true,
-  createdAt: true,
+  paranoid: true,
+  underscored: true,
 })
 export class User extends Model {
   @Column
@@ -39,7 +38,7 @@ export class User extends Model {
   books: Book[];
 
   @HasMany(() => Book)
-  saved_book: Book[];
+  savedBook: Book[];
 
   @HasMany(() => Book)
   shopping: Book[];

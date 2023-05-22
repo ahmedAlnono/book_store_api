@@ -1,9 +1,9 @@
 import { ConfigService } from '@nestjs/config';
 import { Sequelize } from 'sequelize-typescript';
-import { User } from 'src/user/models/user.model';
-import { Book } from 'src/book/models/book.model';
-import { Follow } from 'src/user/models/follow.model';
-import { Like } from 'src/book/models/like.model';
+import { User } from 'src/models/user.model';
+import { Book } from 'src/models/book.model';
+import { Follow } from 'src/models/follow.model';
+import { Like } from 'src/models/like.model';
 
 export const databaseProviders = [
   {

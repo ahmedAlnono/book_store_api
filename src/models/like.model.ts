@@ -6,7 +6,7 @@ import {
   DataType,
   DeletedAt,
 } from 'sequelize-typescript';
-import { User } from 'src/user/models/user.model';
+import { User } from './user.model';
 import { Book } from './book.model';
 
 @Table({

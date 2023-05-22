@@ -4,16 +4,20 @@ import {
   Inject,
   Injectable,
 } from '@nestjs/common';
-import { User } from './models/user.model';
-import { Follow } from './models/follow.model';
+import { User } from '../models/user.model';
+import { Follow } from '../models/follow.model';
 import { followUser } from './dto/followUser.dto';
+import {
+  FOLLOW_MODEL,
+  USER_MODEL,
+} from 'src/common/constants/system.constants';
 
 @Injectable()
 export class UserService {
   constructor(
-    @Inject('User')
+    @Inject(USER_MODEL)
     private user: typeof User,
-    @Inject('Follow')
+    @Inject(FOLLOW_MODEL)
     private follow: typeof Follow,
   ) {}
   async findAll() {
