@@ -11,6 +11,7 @@ import {
   FOLLOW_MODEL,
   USER_MODEL,
 } from 'src/common/constants/system.constants';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class UserService {
@@ -28,8 +29,14 @@ export class UserService {
 
   async delete(id: number) {
     try {
-      const user = await this.user.findByPk(+id);
-      user.$set('deletedAt', Date.now());
+      this.user.addScope('deleted_users', function (user) {
+        return user.where({ [Op.ne]: null });
+      });
+      await this.user.destroy({
+        where: {
+          id,
+        },
+      });
       return 'user successfully deleted';
     } catch (e) {
       throw new ForbiddenException('user not found');

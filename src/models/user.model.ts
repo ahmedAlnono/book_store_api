@@ -7,11 +7,22 @@ import {
   IsEmail,
   Unique,
   DeletedAt,
+  Scopes,
 } from 'sequelize-typescript';
 import { Book } from './book.model';
 import { Follow } from './follow.model';
 import { Like } from './like.model';
+import { Op } from 'sequelize/types/operators';
 
+@Scopes(() => ({
+  deleted: {
+    where: {
+      deletedAt: {
+        [Op.ne]: null, // not equal to null
+      },
+    },
+  },
+}))
 @Table({
   paranoid: true,
   underscored: true,
