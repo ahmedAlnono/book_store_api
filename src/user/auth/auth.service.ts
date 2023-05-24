@@ -28,14 +28,14 @@ export class AuthService {
   }
   async signup(user: CreateUserDto) {
     try {
-      const hash = await argon.hash(user.hash);
+      // const hash = await argon.hash(user.hash);
       const create_user = await this.user.create({
         name: user.name,
         email: user.email,
-        hash,
+        hash: user.hash,
       });
-      delete create_user.hash;
-      return create_user;
+      console.log(create_user.hash);
+      return this.signToken(create_user.id, user.email, user.hash);
     } catch (e) {
       throw new ForbiddenException('wrong user data');
     }

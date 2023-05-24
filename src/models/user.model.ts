@@ -6,19 +6,20 @@ import {
   HasMany,
   IsEmail,
   Unique,
-  DeletedAt,
   Scopes,
+  BeforeCreate,
 } from 'sequelize-typescript';
 import { Book } from './book.model';
 import { Follow } from './follow.model';
 import { Like } from './like.model';
-import { Op } from 'sequelize/types/operators';
+import { Op } from 'sequelize';
+import * as argon from 'argon2';
 
 @Scopes(() => ({
   deleted: {
     where: {
       deletedAt: {
-        [Op.ne]: null, // not equal to null
+        [Op.ne]: null,
       },
     },
   },
@@ -54,10 +55,6 @@ export class User extends Model {
   @HasMany(() => Book)
   shopping: Book[];
 
-  @DeletedAt
-  @Column({ field: 'deleted_at' })
-  deletedAt: Date;
-
   @Column({ field: 'deleted_by', type: DataType.STRING, allowNull: true })
   deletedBy: string;
 
@@ -66,4 +63,9 @@ export class User extends Model {
 
   @HasMany(() => Like)
   good_rates: Like[];
+
+  @BeforeCreate
+  static async hashPassword(user: User) {
+    user.hash = await argon.hash(user.hash);
+  }
 }

@@ -12,7 +12,6 @@ import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { FindeUserDto } from 'src/user/dto/find-user.dto';
 import { Request } from 'express';
-// import { JwtGuard } from './gaurd/jwt.guard';
 import { GlobalAuthGuard } from './gaurd/auth.guard';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -42,9 +41,4 @@ export class AuthController {
   profile(@Req() req: Request) {
     return req.user;
   }
-
-  // @Post('signin')
-  // signup(@Body() user: FindeUserDto) {
-  //   return this.authService.signin(user);
-  // }
 }

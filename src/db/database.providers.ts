@@ -19,7 +19,6 @@ export const databaseProviders = [
         database: configService.get<string>('DB_DATABASE'),
       });
       sequelize.addModels([User, Book, Follow, Like]);
-      // sequelize.sync();
       return sequelize;
     },
   },

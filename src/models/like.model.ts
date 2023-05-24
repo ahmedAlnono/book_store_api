@@ -4,13 +4,11 @@ import {
   Column,
   ForeignKey,
   DataType,
-  DeletedAt,
 } from 'sequelize-typescript';
 import { User } from './user.model';
 import { Book } from './book.model';
 
 @Table({
-  deletedAt: true,
   paranoid: true,
   underscored: true,
 })
@@ -37,8 +35,4 @@ export class Like extends Model<Like> {
     allowNull: true,
   })
   bookId: number;
-
-  @DeletedAt
-  @Column({ field: 'deletedAt' })
-  deletedAt: Date;
 }

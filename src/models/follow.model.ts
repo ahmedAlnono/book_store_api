@@ -3,7 +3,6 @@ import {
   Table,
   Column,
   DataType,
-  DeletedAt,
   ForeignKey,
 } from 'sequelize-typescript';
 import { User } from './user.model';
@@ -29,8 +28,4 @@ export class Follow extends Model {
     field: 'followed_id',
   })
   followedId: number;
-
-  @DeletedAt
-  @Column({ field: 'deletedAt' })
-  deletedAt: Date;
 }

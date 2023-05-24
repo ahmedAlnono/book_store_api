@@ -54,7 +54,7 @@ export class Book extends Model<Book> {
   @Column({ field: 'deleted_at' })
   deletedAt: Date;
 
-  @Column({ field: 'deleted_by' })
+  @Column({ field: 'deleted_by', type: DataType.STRING, allowNull: true })
   deletedBy: string;
 
   @Column({ field: 'updated_by' })
