@@ -5,22 +5,22 @@ import {
   Body,
   Param,
   Delete,
-  UseGuards,
   Req,
   ParseIntPipe,
-  SetMetadata,
+  Res,
+  Patch,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { followUser } from './dto/followUser.dto';
-import { Request } from 'express';
-import { GlobalAuthGuard } from './auth/gaurd/auth.guard';
+import { Request, Response } from 'express';
+import { Public } from './public.decorator';
 
-@UseGuards(GlobalAuthGuard)
+// @UseGuards(GlobalAuthGuard)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @SetMetadata('noAuth', true)
+  @Public()
   @Get()
   findAll() {
     return this.userService.findAll();
@@ -52,5 +52,10 @@ export class UserController {
     } else {
       return this.userService.adminDelete(+id);
     }
+  }
+  @Post('cookies')
+  getCockies(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    res.cookie('jwt', 'ahmed');
+    return req.cookies;
   }
 }

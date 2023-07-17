@@ -10,7 +10,7 @@ import {
 import { User } from './user.model';
 import { Like } from './like.model';
 
-const { INTEGER, JSON } = DataType;
+const { INTEGER } = DataType;
 
 @Table({
   deletedAt: true,
@@ -20,16 +20,6 @@ const { INTEGER, JSON } = DataType;
 export class Book extends Model<Book> {
   @Column
   name: string;
-
-  @Column({
-    type: JSON,
-  })
-  data: {
-    sections: number;
-    pages: number;
-    price: string;
-    version: number;
-  };
 
   @Column({
     type: DataType.BOOLEAN,

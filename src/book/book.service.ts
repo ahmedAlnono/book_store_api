@@ -35,7 +35,6 @@ export class BookService {
         const data = createBookDto.data;
         const book = await this.book.create({
           name: createBookDto.name,
-          data,
           public: createBookDto.public || true,
           body: createBookDto.body,
           category: createBookDto.category || 'global',
@@ -54,10 +53,11 @@ export class BookService {
   async findAll() {
     try {
       const books = await this.book.findAll({
-        attributes: ['name', 'data', 'category'],
+        // attributes: ['name', 'category'],
         where: {
           public: true,
         },
+        limit: 100,
       });
       return books;
     } catch (e) {
@@ -67,11 +67,8 @@ export class BookService {
 
   async findOne(id: number) {
     try {
-      const book = await this.book.findOne({
-        where: {
-          id,
-        },
-        attributes: ['name', 'data', 'category'],
+      const book = await this.book.findByPk(id, {
+        attributes: ['name', 'body'],
       });
       return book;
     } catch (e) {
@@ -85,7 +82,6 @@ export class BookService {
       await book.update({
         name: updateBookDto.name,
         body: updateBookDto.body,
-        data: updateBookDto.data,
         category: updateBookDto.category || 'global',
         public: updateBookDto.public || true,
       });

@@ -5,9 +5,11 @@ import {
   MaxLength,
   MinLength,
   Matches,
+  IsAlpha,
 } from 'class-validator';
 
 export class CreateUserDto {
+  @IsAlpha()
   @IsString()
   @IsNotEmpty()
   name: string;

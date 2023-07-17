@@ -23,6 +23,11 @@ import * as argon from 'argon2';
       },
     },
   },
+  active: {
+    where: {
+      deletedAt: null,
+    },
+  },
 }))
 @Table({
   paranoid: true,

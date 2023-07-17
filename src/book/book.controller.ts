@@ -6,14 +6,13 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
 } from '@nestjs/common';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
-import { UserGuard } from 'src/user/user.guard';
 import { LikeBookDto } from './dto/like-book.dto';
 import { SaveBookDto } from './dto/save-book-dto';
+import { Public } from 'src/user/public.decorator';
 
 @Controller('book')
 export class BookController {
@@ -24,25 +23,23 @@ export class BookController {
     return this.bookService.create(createBookDto);
   }
 
-  @UseGuards(UserGuard)
+  @Public()
   @Get()
   findAll() {
     return this.bookService.findAll();
   }
 
-  @UseGuards(UserGuard)
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.bookService.findOne(+id);
   }
 
-  @UseGuards(UserGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
     return this.bookService.update(+id, updateBookDto);
   }
 
-  @UseGuards(UserGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.bookService.remove(+id);

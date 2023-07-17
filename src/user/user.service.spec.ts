@@ -45,29 +45,6 @@ describe('UserService', () => {
     });
   });
 
-  // describe('findOne', () => {
-  //   it('should return a user by id', async () => {
-  //     const mockUser = { email: 'alice@example.com', name: 'Alice' };
-  //     user.findByPk.mockResolvedValue(mockUser);
-  //     expect(await service.findOne(1)).toEqual(mockUser);
-  //   });
-
-  //   it('should throw a ForbiddenException if user is deleted', async () => {
-  //     const mockUser = { deletedAt: Date.now() };
-  //     user.findByPk.mockResolvedValue(mockUser);
-  //     await expect(service.findOne(1)).rejects.toThrow(
-  //       new ForbiddenException('user is deleted'),
-  //     );
-  //   });
-
-  //   it('should throw a ForbiddenException if user is not found', async () => {
-  //     user.findByPk.mockResolvedValue(null);
-  //     await expect(service.findOne(1)).rejects.toThrow(
-  //       new ForbiddenException('user not found'),
-  //     );
-  //   });
-  // });
-
   describe('delete', () => {
     it('should delete a user by id', async () => {
       const mockUser = { $set: jest.fn() };

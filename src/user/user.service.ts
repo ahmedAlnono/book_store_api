@@ -8,9 +8,12 @@ import { User } from '../models/user.model';
 import { Follow } from '../models/follow.model';
 import { followUser } from './dto/followUser.dto';
 import {
+  BOOK_MODEL,
   FOLLOW_MODEL,
   USER_MODEL,
 } from 'src/common/constants/system.constants';
+import { Book } from 'src/models/book.model';
+import { Sequelize } from 'sequelize';
 
 @Injectable()
 export class UserService {
@@ -19,10 +22,13 @@ export class UserService {
     private user: typeof User,
     @Inject(FOLLOW_MODEL)
     private follow: typeof Follow,
+    @Inject(BOOK_MODEL)
+    private book: typeof Book,
   ) {}
   async findAll() {
     return await this.user.findAll({
-      attributes: ['name', 'id'],
+      limit: 20,
+      order: Sequelize.literal('rand()'),
     });
   }
 
@@ -53,15 +59,7 @@ export class UserService {
 
   async adminDelete(id: number) {
     try {
-      const user = await this.user.findByPk(+id);
-      if (user) {
-        user.$set('deletedAt', Date.now());
-        user.$set('deletedBy', 'Admin');
-        await user.save();
-        return 'user is updated';
-      } else {
-        throw new ForbiddenException('user not found');
-      }
+      await this.user.destroy({ where: { id } });
     } catch (e) {
       throw new BadRequestException('wrong user data');
     }
