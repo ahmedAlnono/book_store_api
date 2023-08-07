@@ -36,11 +36,11 @@ export class AuthController {
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
   googleAuth(@Req() req: Request) {
-    return req.user;
+    return req['user'];
   }
 
   @Get('profile')
   profile(@Req() req: Request) {
-    return req.user;
+    return req['user'];
   }
 }

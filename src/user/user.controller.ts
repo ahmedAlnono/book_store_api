@@ -28,7 +28,7 @@ export class UserController {
 
   @Get(':id')
   findOne(@Req() req: Request) {
-    return req?.user;
+    return req['user'];
   }
 
   @Delete(':id')

@@ -22,10 +22,10 @@ import { GlobalAuthGuard } from './user/auth/gaurd/auth.guard';
   controllers: [AppController],
   providers: [
     AppService,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: GlobalAuthGuard,
-    // },
+    {
+      provide: APP_GUARD,
+      useValue: GlobalAuthGuard,
+    },
   ],
 })
 export class AppModule {}
